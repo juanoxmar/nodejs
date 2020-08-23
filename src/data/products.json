@@ -1,1 +1,8 @@
-[{"title":"Hello"},{"title":"number 2"},{"title":"Does this work?"},{"title":"d"},{"title":"Yo!"}]
+[
+  {
+    "title": "Harry",
+    "imageUrl": "https://images-na.ssl-images-amazon.com/images/I/81iqZ2HHD-L.jpg",
+    "description": "Sorcerer's Stone",
+    "price": "17.99"
+  }
+]

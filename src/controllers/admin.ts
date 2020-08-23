@@ -1,33 +1,32 @@
-import { requestType, productType } from 'src/@types/types';
+import { requestType } from 'src/@types/types';
 import Product from '../models/product';
 
 export const getAddProduct: requestType = (req, res, next): void => {
-  res.render('add-product', {
+  res.render('admin/add-product', {
     pageTitle: 'Add Product',
     path: '/admin/add-product',
-    formsCSS: true,
-    productCSS: true,
-    activeAddProduct: true,
   });
 };
 
 export const postAddProduct: requestType = (req, res, next) => {
   // need body parser for req.body
   // products.push({ title: req.body.title });
-  const product = new Product(req.body.title);
+  const product = new Product(
+    req.body.title,
+    req.body.imageurl,
+    req.body.description,
+    req.body.price
+  );
   product.save();
   res.redirect('/');
 };
 
 export const getProducts: requestType = (req, res, next) => {
   Product.fetchAll((products: any) => {
-    res.render('shop', {
+    res.render('admin/products', {
       prods: products,
-      pageTitle: 'Shop',
-      path: '/',
-      hasProducts: products.length > 0,
-      activeShop: true,
-      productCSS: true,
+      pageTitle: 'Admin Products',
+      path: '/admin/products',
     });
   });
 };
