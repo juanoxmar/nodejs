@@ -13,7 +13,7 @@ export const postAddProduct: requestType = (req, res, next) => {
   // products.push({ title: req.body.title });
   const product = new Product(
     req.body.title,
-    req.body.imageurl,
+    req.body.imageUrl,
     req.body.description,
     req.body.price
   );

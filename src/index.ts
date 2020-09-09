@@ -6,7 +6,7 @@ import moment from 'moment';
 
 import adminRoutes from './routes/admin';
 import shopRoutes from './routes/shop';
-import { pageNotFound } from './controllers/error';
+import errorController from './controllers/error';
 
 const app = express();
 
@@ -20,7 +20,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 
-app.use(pageNotFound);
+app.use(errorController);
 
 app.listen(3000, () => {
   console.log(

@@ -1,6 +1,8 @@
 import fs from 'fs';
 import path from 'path';
 import rootDir from '../util/path';
+import { nanoid } from 'nanoid';
+import { productType } from 'src/@types/types';
 
 const p = path.join(rootDir, 'data', 'products.json');
 
@@ -19,6 +21,7 @@ export default class Product {
   imageUrl: string;
   description: string;
   price: string;
+  id: string;
 
   constructor(
     title: string,
@@ -33,7 +36,8 @@ export default class Product {
   }
 
   save() {
-    getProductsFromFile((products: any) => {
+    this.id = nanoid(8);
+    getProductsFromFile((products: productType[]) => {
       products.push(this);
       fs.writeFile(p, JSON.stringify(products), (err) => {
         if (err) {
@@ -45,5 +49,12 @@ export default class Product {
 
   static fetchAll(cb: any) {
     getProductsFromFile(cb);
+  }
+
+  static findById(id: string, cb: any) {
+    getProductsFromFile((products: productType[]) => {
+      const product = products.find((prod) => prod.id === id);
+      cb(product);
+    });
   }
 }

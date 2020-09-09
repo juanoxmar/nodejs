@@ -5,6 +5,7 @@ export type productType = {
   imageUrl: string;
   description: string;
   price: string;
+  id: string;
 };
 
 export type requestType = (
@@ -12,3 +13,13 @@ export type requestType = (
   res: express.Response,
   next: express.NextFunction
 ) => void;
+
+export type cartProduct = {
+  id: string;
+  qty: number;
+};
+
+export type cartType = {
+  products: cartProduct[];
+  totalPrice: number;
+};
