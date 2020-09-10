@@ -1,9 +1,11 @@
 import fs from 'fs';
 import path from 'path';
 import rootDir from '../util/path';
-import { CartType, ProductType } from 'src/@types/types';
+import { CartType } from 'src/@types/types';
 
 const p = path.join(rootDir, 'data', 'cart.json');
+
+type CB = (cart: CartType) => void;
 
 export default class Cart {
   static addProduct(id: string, productPrice: number): void {
@@ -51,12 +53,26 @@ export default class Cart {
       updatedCart.products = updatedCart.products.filter(
         (prod) => prod.id !== id
       );
-      updatedCart.totalPrice = updatedCart.totalPrice - productPrice * prodQty;
+      updatedCart.totalPrice = +(
+        updatedCart.totalPrice -
+        productPrice * prodQty
+      ).toFixed(2);
       fs.writeFile(p, JSON.stringify(updatedCart), (err) => {
         if (err) {
           console.log(err);
         }
       });
+    });
+  }
+
+  static getCart(cb: CB): void {
+    fs.readFile(p, (err, fileContent) => {
+      const cart: CartType = JSON.parse(fileContent.toString());
+      if (err) {
+        cb(null);
+      } else {
+        cb(cart);
+      }
     });
   }
 }
