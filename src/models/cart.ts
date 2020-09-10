@@ -49,6 +49,9 @@ export default class Cart {
       }
       const updatedCart: CartType = { ...JSON.parse(fileContent.toString()) };
       const product = updatedCart.products.find((prod) => prod.id === id);
+      if (!product) {
+        return;
+      }
       const prodQty = product.qty;
       updatedCart.products = updatedCart.products.filter(
         (prod) => prod.id !== id
