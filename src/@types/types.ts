@@ -1,6 +1,6 @@
 import express from 'express';
 
-export type productType = {
+export type ProductType = {
   title: string;
   imageUrl: string;
   description: string;
@@ -8,18 +8,18 @@ export type productType = {
   id: string;
 };
 
-export type requestType = (
+export type RequestType = (
   req: express.Request,
   res: express.Response,
   next: express.NextFunction
 ) => void;
 
-export type cartProduct = {
+export type CartProduct = {
   id: string;
   qty: number;
 };
 
-export type cartType = {
-  products: cartProduct[];
+export type CartType = {
+  products: CartProduct[];
   totalPrice: number;
 };

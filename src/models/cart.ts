@@ -1,15 +1,15 @@
 import fs from 'fs';
 import path from 'path';
 import rootDir from '../util/path';
-import { cartType } from 'src/@types/types';
+import { CartType } from 'src/@types/types';
 
 const p = path.join(rootDir, 'data', 'cart.json');
 
 export default class Cart {
-  static addProduct(id: string, productPrice: number) {
+  static addProduct(id: string, productPrice: number): void {
     //Fetch Previous cart
     fs.readFile(p, (err, fileContent) => {
-      let cart: cartType = { products: [], totalPrice: 0 };
+      let cart: CartType = { products: [], totalPrice: 0 };
       if (!err) {
         cart = JSON.parse(fileContent.toString());
       }
