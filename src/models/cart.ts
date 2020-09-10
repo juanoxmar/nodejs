@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import rootDir from '../util/path';
-import { CartType } from 'src/@types/types';
+import { CartType, ProductType } from 'src/@types/types';
 
 const p = path.join(rootDir, 'data', 'cart.json');
 
@@ -33,6 +33,26 @@ export default class Cart {
       }
       cart.totalPrice = +cart.totalPrice + productPrice;
       fs.writeFile(p, JSON.stringify(cart), (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+    });
+  }
+
+  static deleteProduct(id: string, productPrice: number): void {
+    fs.readFile(p, (err, fileContent) => {
+      if (err) {
+        return;
+      }
+      const updatedCart: CartType = { ...JSON.parse(fileContent.toString()) };
+      const product = updatedCart.products.find((prod) => prod.id === id);
+      const prodQty = product.qty;
+      updatedCart.products = updatedCart.products.filter(
+        (prod) => prod.id !== id
+      );
+      updatedCart.totalPrice = updatedCart.totalPrice - productPrice * prodQty;
+      fs.writeFile(p, JSON.stringify(updatedCart), (err) => {
         if (err) {
           console.log(err);
         }

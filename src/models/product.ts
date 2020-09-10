@@ -3,6 +3,7 @@ import path from 'path';
 import rootDir from '../util/path';
 import { nanoid } from 'nanoid';
 import { ProductType } from 'src/@types/types';
+import Cart from './cart';
 
 const p = path.join(rootDir, 'data', 'products.json');
 
@@ -62,6 +63,21 @@ export default class Product {
           }
         });
       }
+    });
+  }
+
+  static delete(id: string): void {
+    getProductsFromFile((products) => {
+      const product = products.find((prod) => prod.id === id);
+      const updatedProducts = products.filter((product) => product.id !== id);
+      fs.writeFile(p, JSON.stringify(updatedProducts), (err) => {
+        if (!err) {
+          Cart.deleteProduct(id, +product.price);
+        }
+        if (err) {
+          console.log(err);
+        }
+      });
     });
   }
 

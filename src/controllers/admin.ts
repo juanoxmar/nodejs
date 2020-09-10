@@ -63,3 +63,8 @@ export const getProducts: RequestType = (_req, res, _next) => {
     });
   });
 };
+
+export const postDeleteProduct: RequestType = (req, res, next) => {
+  Product.delete(req.body.productId);
+  res.redirect('/admin/products');
+};
